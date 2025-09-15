@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delivery Admin Panel</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#f5f6fa; }
+    .sidebar { width:240px; height:100vh; background:#222; color:white; position:fixed; padding:20px; }
+    .sidebar h2 { text-align:center; margin-bottom:20px; }
+    .sidebar a { display:block; padding:10px; color:white; text-decoration:none; margin:5px 0; border-radius:5px; cursor:pointer; }
+    .sidebar a:hover { background:#444; }
+    .content { margin-left:260px; padding:20px; }
+    .section { display:none; }
+    .active { display:block; }
+    .card { background:white; padding:20px; margin:10px; border-radius:8px; display:inline-block; width:200px; text-align:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+    table { width:100%; border-collapse:collapse; margin-top:20px; background:white; border-radius:8px; overflow:hidden; }
+    th, td { padding:10px; border:1px solid #ddd; text-align:center; }
+    th { background:#eee; }
+    canvas { margin-top:20px; background:white; padding:20px; border-radius:8px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+    button { padding:6px 12px; border:none; border-radius:5px; cursor:pointer; margin:2px; }
+    .approve { background:green; color:white; }
+    .block { background:red; color:white; }
+    .edit { background:blue; color:white; }
+    .view { background:orange; color:white; }
+  </style>
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a onclick="showSection('dashboard')">Dashboard</a>
+    <a onclick="showSection('orders')">Orders</a>
+    <a onclick="showSection('delivery')">Delivery Boys</a>
+    <a onclick="showSection('reports')">Reports</a>
+    <a onclick="showSection('settings')">Settings</a>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+    <!-- Dashboard Section -->
+    <div id="dashboard" class="section active">
+      <h1>Dashboard</h1>
+      <div class="card">Total Orders<br><b>120</b></div>
+      <div class="card">Active Delivery Boys<br><b>15</b></div>
+      <div class="card">Total Customers<br><b>300</b></div>
+      <div class="card">Revenue<br><b>$8500</b></div>
+
+      <h2>Revenue Chart</h2>
+      <canvas id="revenueChart"></canvas>
+    </div>
+
+    <!-- Orders Section -->
+    <div id="orders" class="section">
+      <h1>Orders</h1>
+      <table>
+        <tr>
+          <th>Order ID</th>
+          <th>Customer</th>
+          <th>Shop</th>
+          <th>Delivery Boy</th>
+          <th>Status</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+        <tr>
+          <td>101</td>
+          <td>John</td>
+          <td>Shop A</td>
+          <td>Ravi</td>
+          <td style="color:green;">Delivered</td>
+          <td>$45</td>
+          <td>
+            <button class="view">View</button>
+            <button class="edit">Edit</button>
+            <button class="block">Cancel</button>
+          </td>
+        </tr>
+        <tr>
+          <td>102</td>
+          <td>Priya</td>
+          <td>Shop B</td>
+          <td>Arun</td>
+          <td style="color:orange;">Pending</td>
+          <td>$30</td>
+          <td>
+            <button class="view">View</button>
+            <button class="approve">Approve</button>
+            <button class="block">Reject</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Delivery Boys Section -->
+    <div id="delivery" class="section">
+      <h1>Delivery Boys</h1>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Orders Delivered</th>
+          <th>Wallet Balance</th>
+          <th>Actions</th>
+        </tr>
+        <tr>
+          <td>201</td>
+          <td>Ravi</td>
+          <td style="color:green;">Active</td>
+          <td>45</td>
+          <td>$200</td>
+          <td>
+            <button class="view">View</button>
+            <button class="edit">Edit</button>
+            <button class="block">Block</button>
+          </td>
+        </tr>
+        <tr>
+          <td>202</td>
+          <td>Arun</td>
+          <td style="color:orange;">On Duty</td>
+          <td>30</td>
+          <td>$150</td>
+          <td>
+            <button class="view">View</button>
+            <button class="approve">Unblock</button>
+            <button class="block">Block</button>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Reports Section -->
+    <div id="reports" class="section">
+      <h1>Reports</h1>
+      <p>Coming soon...</p>
+    </div>
+
+    <!-- Settings Section -->
+    <div id="settings" class="section">
+      <h1>Settings</h1>
+      <p>Admin Profile & App Settings</p>
+    </div>
+  </div>
+
+  <!-- Script -->
+  <script>
+    function showSection(id) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+
+    // Revenue Chart
+    const ctx = document.getElementById('revenueChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Jan','Feb','Mar','Apr','May','Jun'],
+        datasets: [{
+          label: 'Revenue ($)',
+          data: [1200,1900,3000,2500,3200,4000],
+          backgroundColor: '#3498db'
+        }]
+      },
+      options: { responsive: true }
+    });
+  </script>
+</body>
+</html>
